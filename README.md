@@ -2,7 +2,7 @@
 
 A live meter for broadcast speech. It listens to a speech, a debate or a newscast and moves a needle from Proportionate to Hyperbolic, one sentence at a time. When you stop listening, it writes a report on the whole speech.
 
-It is the spoken-word companion to [LITMUS](https://github.com/blueandyellow44/litmus), a news reader that scores every story for how it is told. The meter uses the same scale and the same rubric, adapted for one sentence of speech.
+It is the spoken-word companion to [LITMUS](https://github.com/maxsheahan/litmus), a news reader that scores every story for how it is told. The meter uses the same scale and the same rubric, adapted for one sentence of speech.
 
 ![The meter while a speech is playing](docs/meter.jpg)
 
