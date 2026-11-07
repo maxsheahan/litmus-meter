@@ -2,7 +2,7 @@
 // (Max, 2026-10-07: "the goal is to have this mimic what the website does").
 //
 // SOURCE: litmus-server/src/scoring/composite.ts in the LITMUS repo
-// (github.com/blueandyellow44/litmus), as it stood on 2026-10-07
+// (github.com/maxsheahan/litmus), as it stood on 2026-10-07
 // (weightedBase, fallacyFloor, applyFloors, computeComposite), and the binding
 // rules in calibration.ts. The model judges five dimensions and sets flags;
 // the number is computed here, never by the model. Adapted for a speech, and
