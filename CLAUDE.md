@@ -5,7 +5,7 @@ Project instructions compiled for this repo (project: LITMUS). Global rules load
 This repo is public, so project rulings live in the gitignored `CLAUDE.local.md` beside this file.
 
 ## How changes land
-- Owner: max. Remote: `blueandyellow44/litmus-meter`. Main branch: `main`.
+- Owner: max. Remote: `maxsheahan/litmus-meter`. Main branch: `main`.
 - How changes land (`max-pr`): Branch and pull request for every change; merge to main only on Max's word. Never push to main (branch protection is on).
 - Deploy: `npm run deploy (wrangler pages deploy dist --project-name litmus-meter)` -> Cloudflare Pages litmus-meter.pages.dev. Deploys happen only on Max's word, from main.
   - Verify after deploy: https://litmus-meter.pages.dev/
@@ -18,7 +18,7 @@ This repo is public, so project rulings live in the gitignored `CLAUDE.local.md`
   - `deploy`: `npm run build && wrangler pages deploy dist --project-name litmus-meter --branch main`
 
 ## Stack
-Detected: cloudflare, vite, vitest.
+Detected: cloudflare, pages, vite, vitest.
 Tests run on Vitest; a change to logic ships with a test that fails without it.
 
 ### React / Vite
@@ -33,7 +33,6 @@ Tests run on Vitest; a change to logic ships with a test that fails without it.
 
 ### Cloudflare (Pages / Workers / D1)
 
-- Vite builds to `dist/`. Point Pages at `dist/`, same publish directory as Netlify.
 - **Ship a served favicon with every deploy (2026-07-09, Max, recurring).** Put a real `/favicon.svg` in the served root, linked `type="image/svg+xml"` (plus a raster `.ico`/PNG fallback when tooling allows), and verify it returns 200 with `image/svg+xml` before declaring done. An inline `data:` URI favicon is unreliable in Chrome and ships a blank tab. Favicon is definition-of-done for any web surface, not optional polish.
 - **Static-assets deploys cache HTML; add a no-cache `_headers` or updates look stale (2026-07-09).** For a Workers/Pages static-assets project whose content changes, ship `public/_headers` with `/*` then `Cache-Control: no-cache` so HTML revalidates and deploys show immediately. A `?query` cache-bust does NOT clear the edge asset cache; the authoritative check that a deploy landed is a cache-busted `curl` of the server bytes (grep the changed string), not the browser (browser/edge cache lies). Burned ~20 deploys of the cohort hub chasing "it went dark again" that was pure stale cache.
 - **A per-path `_headers` rule is ADDED to the `/*` rule, never substituted for it (2026-07-31).** Workers Assets concatenates matching blocks per header name, so `/*` setting `Cache-Control: no-cache` plus `/favicon.svg` setting `public, max-age=86400` serves the self-contradicting `Cache-Control: no-cache, public, max-age=86400`. If one path needs a different value for a header, the wildcard must not set that header at all. Verify the served value with `curl -sI` after deploying; the file does not tell you what shipped.
